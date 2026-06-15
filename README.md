@@ -9,6 +9,9 @@ A regression project for predicting electricity costs of buildings based on thei
 ```
 ├── data/
 │   ├── electricity_cost_dataset.csv   # raw dataset
+│   ├── electricity_cost_fe.csv        # dataset after feature engineering
+│   ├── X.csv                          # features for training
+│   └── y.csv                          # target variable
 │
 ├── notebooks/
 │   ├── 01_EDA.ipynb                   # exploratory data analysis
@@ -69,7 +72,7 @@ A regression project for predicting electricity costs of buildings based on thei
 - Correlation analysis of all features with the target variable after FE
 - Saving final `X.csv` and `y.csv`
 
-<img width="1372" height="484" alt="image" src="https://github.com/user-attachments/assets/d58873fb-d959-43a2-8182-c315d6f7fba2" />
+<img width="1384" height="484" alt="image" src="https://github.com/user-attachments/assets/ccb22b97-083b-4ada-b13f-88821462d12f" />
 
 ---
 
@@ -85,12 +88,14 @@ A regression project for predicting electricity costs of buildings based on thei
 
 **Hyperparameter tuning:** Optuna, 50 trials per model, 5-fold cross-validation, metric `neg_RMSE`.
 
-<img width="1187" height="495" alt="image" src="https://github.com/user-attachments/assets/0d721194-949a-4208-afba-89531d175c44" />
+<img width="1187" height="495" alt="image" src="https://github.com/user-attachments/assets/e4cc0c7e-cda1-493b-951c-f3b97ae80dc6" />
 
 
 **Model interpretation:** SHAP `TreeExplainer` for LightGBM and XGBoost — feature importance by mean |SHAP value|.
 
-<img width="789" height="660" alt="image" src="https://github.com/user-attachments/assets/42ef6ddc-c777-45c1-b2d1-6573743aa91d" /> <img width="789" height="660" alt="image" src="https://github.com/user-attachments/assets/9c9f8f44-1b83-4b18-a991-5f6e53a512a6" />
+<img width="789" height="660" alt="image" src="https://github.com/user-attachments/assets/825b16b2-9c2b-42d5-a298-ad3ee202203c" /> <img width="789" height="660" alt="image" src="https://github.com/user-attachments/assets/e8c7de8d-9c9d-4856-9259-4362da98ccb2" />
+
+
 
 
 
@@ -108,5 +113,5 @@ pip install -r "requirements.txt"
 
 | Model | RMSE | R² |
 |---|---|---|
-| LightGBM | 208.69 | 0.9619 |
-| XGBoost | 209.88 | 0.9614 |
+| LightGBM | 209.46 | 0.9616 |
+| XGBoost | 209.83 | 0.9615 |
