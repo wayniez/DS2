@@ -10,7 +10,8 @@ A regression project for predicting electricity costs of buildings based on thei
 ├── data/
 │   ├── electricity_cost_dataset.csv   # raw dataset
 │   ├── electricity_cost_fe.csv        # dataset after feature engineering
-│   ├── X.csv                          # features for training
+│   ├── X_boost.csv                    # features for boosted models
+│   ├── X_linear.csv                   # features for linear models
 │   └── y.csv                          # target variable
 │
 ├── scripts/
