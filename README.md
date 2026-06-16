@@ -85,7 +85,7 @@ A regression project for predicting electricity costs of buildings based on thei
 
 - **LightGBM** — gradient boosting, no scaler needed
 - **XGBoost** — gradient boosting, no scaler needed
-- **ElasticNet** — linear model wrapped in a `Pipeline` with `StandardScaler`
+- **ElasticNet** — linear model wrapped in a `Pipeline` with `StandardScaler`  # excluded from the final comparison due to significantly higher RMSE
 
 **Hyperparameter tuning:** Optuna, 50 trials per model, 5-fold cross-validation, metric `neg_RMSE`.
 
@@ -115,5 +115,5 @@ pip install -r "requirements.txt"
 
 | Model | RMSE | R² |
 |---|---|---|
-| LightGBM | 209.46 | 0.9616 |
-| XGBoost | 209.83 | 0.9615 |
+| LightGBM | 211.26 | 0.9609 |
+| XGBoost | 211.09 | 0.9610 |
