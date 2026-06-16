@@ -10,10 +10,11 @@ A regression project for predicting electricity costs of buildings based on thei
 ├── data/
 │   ├── electricity_cost_dataset.csv   # raw dataset
 │   ├── electricity_cost_fe.csv        # dataset after feature engineering
-│   ├── X.csv                          # features for training
+│   ├── X_boost.csv                    # features for boosted models
+│   ├── X_linear.csv                   # features for linear models
 │   └── y.csv                          # target variable
 │
-├── notebooks/
+├── scripts/
 │   ├── 01_EDA.ipynb                   # exploratory data analysis
 │   ├── 02_FE.ipynb                    # feature engineering
 │   └── 03_model.ipynb                 # model training and evaluation
@@ -84,11 +85,12 @@ A regression project for predicting electricity costs of buildings based on thei
 
 - **LightGBM** — gradient boosting, no scaler needed
 - **XGBoost** — gradient boosting, no scaler needed
-- **ElasticNet** — linear model wrapped in a `Pipeline` with `StandardScaler`
+- **ElasticNet** — linear model wrapped in a `Pipeline` with `StandardScaler`  # excluded from the final comparison due to significantly higher RMSE
 
 **Hyperparameter tuning:** Optuna, 50 trials per model, 5-fold cross-validation, metric `neg_RMSE`.
 
-<img width="1187" height="495" alt="image" src="https://github.com/user-attachments/assets/e4cc0c7e-cda1-493b-951c-f3b97ae80dc6" />
+<img width="1187" height="495" alt="image" src="https://github.com/user-attachments/assets/82bff382-1f93-42f9-8f09-b2621cb0af5c" />
+
 
 
 **Model interpretation:** SHAP `TreeExplainer` for LightGBM and XGBoost — feature importance by mean |SHAP value|.
@@ -113,5 +115,5 @@ pip install -r "requirements.txt"
 
 | Model | RMSE | R² |
 |---|---|---|
-| LightGBM | 209.46 | 0.9616 |
-| XGBoost | 209.83 | 0.9615 |
+| LightGBM | 211.26 | 0.9609 |
+| XGBoost | 211.09 | 0.9610 |
