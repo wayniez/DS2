@@ -89,7 +89,8 @@ A regression project for predicting electricity costs of buildings based on thei
 
 **Hyperparameter tuning:** Optuna, 50 trials per model, 5-fold cross-validation, metric `neg_RMSE`.
 
-<img width="1187" height="495" alt="image" src="https://github.com/user-attachments/assets/82bff382-1f93-42f9-8f09-b2621cb0af5c" />
+<img width="1187" height="495" alt="image" src="https://github.com/user-attachments/assets/ee7f172b-087d-4ae6-a943-a3e22b458415" />
+
 
 
 
