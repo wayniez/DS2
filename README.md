@@ -88,7 +88,8 @@ A regression project for predicting electricity costs of buildings based on thei
 
 **Hyperparameter tuning:** Optuna, 50 trials per model, 5-fold cross-validation, metric `neg_RMSE`.
 
-<img width="1187" height="495" alt="image" src="https://github.com/user-attachments/assets/e4cc0c7e-cda1-493b-951c-f3b97ae80dc6" />
+<img width="1187" height="495" alt="image" src="https://github.com/user-attachments/assets/82bff382-1f93-42f9-8f09-b2621cb0af5c" />
+
 
 
 **Model interpretation:** SHAP `TreeExplainer` for LightGBM and XGBoost — feature importance by mean |SHAP value|.
