@@ -13,7 +13,7 @@ A regression project for predicting electricity costs of buildings based on thei
 │   ├── X.csv                          # features for training
 │   └── y.csv                          # target variable
 │
-├── notebooks/
+├── scripts/
 │   ├── 01_EDA.ipynb                   # exploratory data analysis
 │   ├── 02_FE.ipynb                    # feature engineering
 │   └── 03_model.ipynb                 # model training and evaluation
