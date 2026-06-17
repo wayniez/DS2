@@ -94,7 +94,7 @@ A regression project for predicting electricity costs of buildings based on thei
 
 
 
-**Model interpretation:** SHAP `TreeExplainer` for LightGBM and XGBoost — feature importance by mean |SHAP value|.
+**Model interpretation:** SHAP `TreeExplainer` for LightGBM and XGBoost - feature importance by mean |SHAP value|.
 
 <img width="789" height="660" alt="image" src="https://github.com/user-attachments/assets/825b16b2-9c2b-42d5-a298-ad3ee202203c" /> <img width="789" height="660" alt="image" src="https://github.com/user-attachments/assets/e8c7de8d-9c9d-4856-9259-4362da98ccb2" />
 
