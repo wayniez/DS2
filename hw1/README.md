@@ -51,7 +51,7 @@ A regression project for predicting electricity costs of buildings based on thei
 
 ## Notebooks
 
-### 01_EDA.ipynb — Exploratory Data Analysis
+### 01_EDA.ipynb - Exploratory Data Analysis
 
 - Loading and initial inspection (shape, dtypes, missing values)
 - Distributions of numerical features (histograms, boxplots)
