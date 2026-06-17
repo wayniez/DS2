@@ -27,7 +27,7 @@ A regression project for predicting electricity costs of buildings based on thei
 
 ## Data
 
-**Target variable:** `electricity cost` — electricity cost of a building.
+**Target variable:** `electricity cost` - electricity cost of a building.
 
 **Features:**
 
@@ -64,7 +64,7 @@ A regression project for predicting electricity costs of buildings based on thei
 
 ---
 
-### 02_FE.ipynb — Feature Engineering
+### 02_FE.ipynb - Feature Engineering
 
 - Outlier removal via IQR for `water consumption` and `resident count`
 - New binary feature `has residents` (`resident count > 0`)
@@ -77,15 +77,15 @@ A regression project for predicting electricity costs of buildings based on thei
 
 ---
 
-### 03_model.ipynb — Modelling
+### 03_model.ipynb - Modelling
 
 **Train/test split:** 80% train / 20% test, `random_state=42`
 
 **Models:**
 
-- **LightGBM** — gradient boosting, no scaler needed
-- **XGBoost** — gradient boosting, no scaler needed
-- **ElasticNet** — linear model wrapped in a `Pipeline` with `StandardScaler`  # excluded from the final comparison due to significantly higher RMSE
+- **LightGBM** - gradient boosting, no scaler needed
+- **XGBoost** - gradient boosting, no scaler needed
+- **ElasticNet** - linear model wrapped in a `Pipeline` with `StandardScaler`  # excluded from the final comparison due to significantly higher RMSE
 
 **Hyperparameter tuning:** Optuna, 50 trials per model, 5-fold cross-validation, metric `neg_RMSE`.
 
