@@ -1,2 +1,5 @@
 venv
 for_libraries/
+data
+checkpoints
+__pycache__ 
