@@ -27,7 +27,7 @@ A regression project for predicting electricity costs of buildings based on thei
 
 ## Data
 
-**Target variable:** `electricity cost` — electricity cost of a building.
+**Target variable:** `electricity cost` - electricity cost of a building.
 
 **Features:**
 
@@ -51,7 +51,7 @@ A regression project for predicting electricity costs of buildings based on thei
 
 ## Notebooks
 
-### 01_EDA.ipynb — Exploratory Data Analysis
+### 01_EDA.ipynb - Exploratory Data Analysis
 
 - Loading and initial inspection (shape, dtypes, missing values)
 - Distributions of numerical features (histograms, boxplots)
@@ -64,7 +64,7 @@ A regression project for predicting electricity costs of buildings based on thei
 
 ---
 
-### 02_FE.ipynb — Feature Engineering
+### 02_FE.ipynb - Feature Engineering
 
 - Outlier removal via IQR for `water consumption` and `resident count`
 - New binary feature `has residents` (`resident count > 0`)
@@ -77,15 +77,15 @@ A regression project for predicting electricity costs of buildings based on thei
 
 ---
 
-### 03_model.ipynb — Modelling
+### 03_model.ipynb - Modelling
 
 **Train/test split:** 80% train / 20% test, `random_state=42`
 
 **Models:**
 
-- **LightGBM** — gradient boosting, no scaler needed
-- **XGBoost** — gradient boosting, no scaler needed
-- **ElasticNet** — linear model wrapped in a `Pipeline` with `StandardScaler`  # excluded from the final comparison due to significantly higher RMSE
+- **LightGBM** - gradient boosting, no scaler needed
+- **XGBoost** - gradient boosting, no scaler needed
+- **ElasticNet** - linear model wrapped in a `Pipeline` with `StandardScaler`  # excluded from the final comparison due to significantly higher RMSE
 
 **Hyperparameter tuning:** Optuna, 50 trials per model, 5-fold cross-validation, metric `neg_RMSE`.
 
@@ -94,7 +94,7 @@ A regression project for predicting electricity costs of buildings based on thei
 
 
 
-**Model interpretation:** SHAP `TreeExplainer` for LightGBM and XGBoost — feature importance by mean |SHAP value|.
+**Model interpretation:** SHAP `TreeExplainer` for LightGBM and XGBoost - feature importance by mean |SHAP value|.
 
 <img width="789" height="660" alt="image" src="https://github.com/user-attachments/assets/825b16b2-9c2b-42d5-a298-ad3ee202203c" /> <img width="789" height="660" alt="image" src="https://github.com/user-attachments/assets/e8c7de8d-9c9d-4856-9259-4362da98ccb2" />
 
