@@ -43,7 +43,6 @@ hw2/
 Expected directory layout:
 ```
 data/
-└── VisA/
     ├── split_csv/
     │   └── 1cls.csv
     ├── pcb1/
@@ -54,7 +53,7 @@ data/
     └── ...
 ```
 
-Download: [VisA on Kaggle](https://www.kaggle.com/datasets/awsaf49/visa-dataset)
+Download: [VisA on Kaggle](https://www.kaggle.com/datasets/ess1004/visa-anomaly-detection)
 
 ---
 
