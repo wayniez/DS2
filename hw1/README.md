@@ -60,7 +60,8 @@ A regression project for predicting electricity costs of buildings based on thei
 - Target variable analysis by building type
 - Scatter plots: `site area` vs `electricity cost` (r=0.9), `water consumption` vs `electricity cost` (r=0.7)
 
-<img width="1113" height="784" alt="4dd3c5e5-4224-45c8-8774-4f50ada3c13d" src="https://github.com/user-attachments/assets/0d87214b-dd41-403d-a1e8-e0e5e13ae978" />
+<img width="1096" height="784" alt="image" src="https://github.com/user-attachments/assets/56f411c7-956b-4f77-9db2-4914ec7e4e75" />
+
 
 ---
 
