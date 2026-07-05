@@ -87,20 +87,16 @@ A regression project for predicting electricity costs of buildings based on thei
 - **LightGBM** - gradient boosting, no scaler needed
 - **XGBoost** - gradient boosting, no scaler needed
 - **ElasticNet** - linear model wrapped in a `Pipeline` with `StandardScaler`  # excluded from the final comparison due to significantly higher RMSE
-
+- **RandomForest**
+- 
 **Hyperparameter tuning:** Optuna, 50 trials per model, 5-fold cross-validation, metric `neg_RMSE`.
 
-<img width="1187" height="495" alt="image" src="https://github.com/user-attachments/assets/ee7f172b-087d-4ae6-a943-a3e22b458415" />
+<img width="1586" height="495" alt="image" src="https://github.com/user-attachments/assets/beb4360a-6994-4af9-8c0b-971a4a2be26a" />
 
 
 
 
-**Model interpretation:** SHAP `TreeExplainer` for LightGBM and XGBoost - feature importance by mean |SHAP value|.
-
-<img width="789" height="660" alt="image" src="https://github.com/user-attachments/assets/825b16b2-9c2b-42d5-a298-ad3ee202203c" /> <img width="789" height="660" alt="image" src="https://github.com/user-attachments/assets/e8c7de8d-9c9d-4856-9259-4362da98ccb2" />
-
-
-
+**Model interpretation:** SHAP `TreeExplainer` for LightGBM, XGBoost and Decision Forest- feature importance by mean |SHAP value|.
 
 
 ---
