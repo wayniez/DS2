@@ -3,3 +3,4 @@ for_libraries/
 data
 checkpoints
 __pycache__ 
+hw3/.env
