@@ -1,4 +1,4 @@
-# DS-Bot — Telegram FAQ Bot about Data Science
+# DS-Bot - Telegram FAQ Bot about Data Science
 
 An intent-classification bot (simple bag-of-words + feedforward neural
 network) that answers English-language questions about Data Science by
@@ -7,13 +7,13 @@ picking a matching response from `intents.json`.
 ## Project Structure
 
 ```
-intents.json      — intents (topics: DS profession, libraries, learning path, jobs, Kaggle...)
-model.py           — neural network architecture (fully connected MLP, 2 hidden layers)
-nltk_utils.py       — tokenization and stemming
-train.py           — model training, saves data.pth, logs training progress
-bot.py             — the Telegram bot itself, logs user questions/answers
-requirements.txt   — dependencies
-.env.example       — example file with the bot token
+intents.json       - intents (topics: DS profession, libraries, learning path, jobs, Kaggle...)
+model.py           - neural network architecture (fully connected MLP, 2 hidden layers)
+nltk_utils.py      - tokenization and stemming
+train.py           - model training, saves data.pth, logs training progress
+bot.py             - the Telegram bot itself, logs user questions/answers
+requirements.txt   - dependencies
+.env.example       - example file with the bot token
 ```
 
 ## Why This Architecture
@@ -33,10 +33,10 @@ together with a regex tokenizer `[a-z0-9]+` (Latin letters and digits, no
 Cyrillic support). If a user writes in another language, `bot.py` detects
 this via `langdetect` and replies with `NOT_ENGLISH_RESPONSE` ("Sorry, I
 only understand English..."), except in two cases:
-- the message is shorter than 3 characters (`MIN_LEN_FOR_LANG_CHECK`) —
+- the message is shorter than 3 characters (`MIN_LEN_FOR_LANG_CHECK`) -
   language detection on such short strings is unreliable, so they go
   straight to the model instead;
-- `langdetect` fails to detect a language (e.g. emoji/numbers only) — the
+- `langdetect` fails to detect a language (e.g. emoji/numbers only) - the
   user isn't blocked in that case.
 
 ## Installation
@@ -45,7 +45,7 @@ only understand English..."), except in two cases:
 pip install -r requirements.txt
 ```
 
-You don't need to run `nltk.download('punkt')` — tokenization is done via
+You don't need to run `nltk.download('punkt')` - tokenization is done via
 a custom regex, and `PorterStemmer` works algorithmically without
 requiring extra downloaded data.
 
@@ -78,7 +78,7 @@ On every user message, the bot:
 - checks that the message is in English (otherwise replies with a polite
   decline);
 - predicts the intent (tag) and the model's confidence;
-- if confidence is above the threshold `CONF_THRESHOLD` (0.75) — replies
+- if confidence is above the threshold `CONF_THRESHOLD` (0.75) - replies
   with a random response from the matching intent, otherwise asks the
   user to rephrase or check `/help`;
 - **logs the question and answer** to `qa_history.log` (timestamp,
@@ -94,13 +94,13 @@ Example line from `qa_history.log`:
 
 ## Bot Commands
 
-- `/start` — greeting and a short description of the bot;
-- `/help` — example questions you can ask.
+- `/start` - greeting and a short description of the bot;
+- `/help` - example questions you can ask.
 
 ## Extending the Bot
 
 - Add new intents (`tag`, `patterns`, `responses`) to `intents.json` and
-  retrain the model with `train.py` — no changes to the bot code needed.
+  retrain the model with `train.py` - no changes to the bot code needed.
 - The confidence threshold `CONF_THRESHOLD` in `bot.py` can be lowered or
   raised depending on how often the bot should admit it "didn't
   understand".
@@ -118,4 +118,4 @@ Example line from `qa_history.log`:
   files.
 - **The bot rejects non-English messages outright**, except for very
   short ones (< 3 characters) or ones where `langdetect` fails to detect a
-  language — those are always passed through to the model.
+  language - those are always passed through to the model.
