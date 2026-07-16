@@ -6,3 +6,8 @@ __pycache__
 hw3/.env
 final_project/.env
 .idea
+hw4/.env
+hw4/data.pth
+hw4/bot.log
+hw4/qa_history.log
+hw4/data.pth
