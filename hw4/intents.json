@@ -1,0 +1,147 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": [
+        "Hi",
+        "Hello",
+        "Hey",
+        "Good day",
+        "Is anyone there?",
+        "What's up"
+      ],
+      "responses": [
+        "Hey there! I'm a Data Science helper bot. Ask me anything about the field, tools, or learning path.",
+        "Hello! Ready to talk about Data Science.",
+        "Hi! What would you like to know about DS?"
+      ]
+    },
+    {
+      "tag": "goodbye",
+      "patterns": [
+        "Bye",
+        "Goodbye",
+        "See you later",
+        "That's all, thanks, bye"
+      ],
+      "responses": [
+        "See you later! Good luck with your Data Science journey.",
+        "Bye! Come back with more questions anytime.",
+        "Have a great day!"
+      ]
+    },
+    {
+      "tag": "thanks",
+      "patterns": [
+        "Thanks",
+        "Thank you",
+        "That was really helpful",
+        "Thanks a lot!"
+      ],
+      "responses": [
+        "Happy to help!",
+        "Any time!",
+        "You're welcome."
+      ]
+    },
+    {
+      "tag": "what_is_ds",
+      "patterns": [
+        "What is Data Science?",
+        "Explain data science to me",
+        "What does a data scientist do",
+        "Tell me about the data scientist role"
+      ],
+      "responses": [
+        "Data Science sits at the intersection of statistics, programming, and domain knowledge. It's about analyzing data and turning it into useful insights or predictions.",
+        "A data scientist collects, cleans, and analyzes data, builds machine learning models, and helps businesses make data-driven decisions."
+      ]
+    },
+    {
+      "tag": "ml_vs_ds",
+      "patterns": [
+        "What's the difference between Data Science and Machine Learning?",
+        "Are ML and DS the same thing?",
+        "How is DS different from ML"
+      ],
+      "responses": [
+        "Data Science is the broader field, covering data collection, cleaning, analysis, and visualization. Machine Learning is one of the tools used within DS for building predictive models.",
+        "ML is a subset of DS: DS also includes statistics, analytics, and framing business problems, not just training models."
+      ]
+    },
+    {
+      "tag": "libraries",
+      "patterns": [
+        "What Python libraries do I need for Data Science?",
+        "Should I learn pandas or numpy?",
+        "What tools do data scientists use",
+        "Libraries for machine learning"
+      ],
+      "responses": [
+        "The core toolkit: numpy and pandas for data manipulation, matplotlib/seaborn for visualization, scikit-learn for classic ML, and PyTorch or TensorFlow for deep learning.",
+        "Start with pandas and numpy, then add scikit-learn, and matplotlib or plotly for visualization."
+      ]
+    },
+    {
+      "tag": "python_or_r",
+      "patterns": [
+        "What's better to learn: Python or R?",
+        "Python or R for data science",
+        "Should I code in Python or R"
+      ],
+      "responses": [
+        "For most jobs and industry use cases, Python is the safer bet: more libraries, a bigger community, and easier production integration. R is strong for statistics and academic research.",
+        "Python is more versatile for industry work, while R shines in statistical analysis and bioinformatics."
+      ]
+    },
+    {
+      "tag": "learning_path",
+      "patterns": [
+        "Where should I start learning Data Science?",
+        "How do I get into data science from scratch?",
+        "Study plan for data science",
+        "Can you recommend some courses?"
+      ],
+      "responses": [
+        "A typical path: 1) Python and math basics (linear algebra, statistics), 2) pandas/numpy for data handling, 3) scikit-learn and classic ML, 4) visualization and SQL, 5) a couple of portfolio projects.",
+        "Start with Python fundamentals and statistics, then move to data analysis with pandas and practice on real datasets (Kaggle is great for this)."
+      ]
+    },
+    {
+      "tag": "math_requirements",
+      "patterns": [
+        "What math do I need for data science?",
+        "Do data scientists need linear algebra",
+        "How much math should I know"
+      ],
+      "responses": [
+        "Useful areas: linear algebra (vectors, matrices), probability and statistics, and basic calculus (derivatives, gradients). This is the foundation for understanding ML algorithms.",
+        "Deep math isn't required to start, but understanding statistics and linear algebra makes learning ML algorithms much easier."
+      ]
+    },
+    {
+      "tag": "kaggle",
+      "patterns": [
+        "What is Kaggle?",
+        "Why should I use Kaggle",
+        "Is it worth competing on Kaggle"
+      ],
+      "responses": [
+        "Kaggle is a platform with datasets and machine learning competitions. It's a great way to practice on real data and build a portfolio.",
+        "Competing on Kaggle helps sharpen practical skills and shows employers you can solve real-world problems."
+      ]
+    },
+    {
+      "tag": "help",
+      "patterns": [
+        "What can you do?",
+        "Help",
+        "What questions can I ask?"
+      ],
+      "responses": [
+        "I can talk about the Data Science field, the libraries and math you need, how to start learning, how to find a job, and what Kaggle is. Just ask!",
+        "Ask me about tools, learning, or getting hired in data science. I'll do my best to help."
+      ]
+    }
+  ]
+}
