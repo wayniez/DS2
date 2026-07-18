@@ -1,87 +1,29 @@
-2026-07-16 16:03:14,395 [INFO] Loading intents.json
-2026-07-16 16:03:14,400 [INFO] Dataset: 51 examples, 14 intents: ['funny', 'goodbye', 'greeting', 'help', 'job_search', 'kaggle', 'learning_path', 'libraries', 'math_requirements', 'ml_vs_ds', 'python_or_r', 'salary', 'thanks', 'what_is_ds']
-2026-07-16 16:03:14,400 [INFO] Vocabulary size (unique stems): 101
-2026-07-16 16:03:14,407 [INFO] Hyperparameters: epochs=1000, batch_size=8, lr=0.001, input_size=101, hidden_size=8, output_size=14
-2026-07-16 16:03:14,445 [INFO] Device for training: cuda
-2026-07-16 16:03:17,364 [INFO] Starting training
-2026-07-16 16:03:17,571 [INFO] Epoch [1/1000], loss: 2.6440, best_loss: 2.6440
-2026-07-16 16:03:18,982 [INFO] Epoch [50/1000], loss: 2.2068, best_loss: 2.2068
-2026-07-16 16:03:20,641 [INFO] Epoch [100/1000], loss: 1.4155, best_loss: 1.2166
-2026-07-16 16:03:22,109 [INFO] Epoch [150/1000], loss: 0.6764, best_loss: 0.6764
-2026-07-16 16:03:23,743 [INFO] Epoch [200/1000], loss: 0.5367, best_loss: 0.4563
-2026-07-16 16:03:25,342 [INFO] Epoch [250/1000], loss: 0.7515, best_loss: 0.3741
-2026-07-16 16:03:26,825 [INFO] Epoch [300/1000], loss: 0.3471, best_loss: 0.2986
-2026-07-16 16:03:28,871 [INFO] Epoch [350/1000], loss: 0.3176, best_loss: 0.2648
-2026-07-16 16:03:30,372 [INFO] Epoch [400/1000], loss: 0.3466, best_loss: 0.2648
-2026-07-16 16:03:31,715 [INFO] Epoch [450/1000], loss: 0.4405, best_loss: 0.2434
-2026-07-16 16:03:33,102 [INFO] Epoch [500/1000], loss: 0.3914, best_loss: 0.1629
-2026-07-16 16:03:34,472 [INFO] Epoch [550/1000], loss: 0.3385, best_loss: 0.1381
-2026-07-16 16:03:35,841 [INFO] Epoch [600/1000], loss: 0.2385, best_loss: 0.1199
-2026-07-16 16:03:37,221 [INFO] Epoch [650/1000], loss: 0.3285, best_loss: 0.1199
-2026-07-16 16:03:38,593 [INFO] Epoch [700/1000], loss: 0.4759, best_loss: 0.0989
-2026-07-16 16:03:40,120 [INFO] Epoch [750/1000], loss: 0.3954, best_loss: 0.0989
-2026-07-16 16:03:41,963 [INFO] Epoch [800/1000], loss: 0.3103, best_loss: 0.0989
-2026-07-16 16:03:43,541 [INFO] Epoch [850/1000], loss: 0.2713, best_loss: 0.0989
-2026-07-16 16:03:44,837 [INFO] Epoch [900/1000], loss: 0.1363, best_loss: 0.0850
-2026-07-16 16:03:46,103 [INFO] Epoch [950/1000], loss: 0.1969, best_loss: 0.0809
-2026-07-16 16:03:47,360 [INFO] Epoch [1000/1000], loss: 0.3548, best_loss: 0.0567
-2026-07-16 16:03:47,361 [INFO] Training completed. Final loss: 0.3548
-2026-07-16 16:03:47,367 [INFO] Model saved to file data.pth
-2026-07-16 16:20:30,366 [INFO] Loading intents.json
-2026-07-16 16:20:30,369 [INFO] Dataset: 41 examples, 11 intents: ['goodbye', 'greeting', 'help', 'kaggle', 'learning_path', 'libraries', 'math_requirements', 'ml_vs_ds', 'python_or_r', 'thanks', 'what_is_ds']
-2026-07-16 16:20:30,369 [INFO] Vocabulary size (unique stems): 87
-2026-07-16 16:20:30,373 [INFO] Hyperparameters: epochs=1000, batch_size=8, lr=0.001, input_size=87, hidden_size=8, output_size=11
-2026-07-16 16:20:30,409 [INFO] Device for training: cuda
-2026-07-16 16:20:32,952 [INFO] Starting training
-2026-07-16 16:20:33,243 [INFO] Epoch [1/1000], loss: 2.3762, best_loss: 2.3762
-2026-07-16 16:20:34,721 [INFO] Epoch [50/1000], loss: 2.1976, best_loss: 2.0706
-2026-07-16 16:20:35,885 [INFO] Epoch [100/1000], loss: 1.5987, best_loss: 1.5987
-2026-07-16 16:20:37,001 [INFO] Epoch [150/1000], loss: 1.1448, best_loss: 0.9668
-2026-07-16 16:20:38,296 [INFO] Epoch [200/1000], loss: 0.6263, best_loss: 0.5616
-2026-07-16 16:20:39,542 [INFO] Epoch [250/1000], loss: 0.4319, best_loss: 0.4028
-2026-07-16 16:20:41,006 [INFO] Epoch [300/1000], loss: 0.5605, best_loss: 0.2875
-2026-07-16 16:20:42,251 [INFO] Epoch [350/1000], loss: 0.2780, best_loss: 0.2341
-2026-07-16 16:20:43,530 [INFO] Epoch [400/1000], loss: 0.2474, best_loss: 0.2101
-2026-07-16 16:20:44,778 [INFO] Epoch [450/1000], loss: 0.0985, best_loss: 0.0985
-2026-07-16 16:20:46,009 [INFO] Epoch [500/1000], loss: 0.1583, best_loss: 0.0985
-2026-07-16 16:20:47,455 [INFO] Epoch [550/1000], loss: 0.1730, best_loss: 0.0985
-2026-07-16 16:20:48,957 [INFO] Epoch [600/1000], loss: 0.3631, best_loss: 0.0985
-2026-07-16 16:20:50,301 [INFO] Epoch [650/1000], loss: 0.1506, best_loss: 0.0985
-2026-07-16 16:20:51,628 [INFO] Epoch [700/1000], loss: 0.5363, best_loss: 0.0985
-2026-07-16 16:20:52,897 [INFO] Epoch [750/1000], loss: 0.6826, best_loss: 0.0952
-2026-07-16 16:20:54,316 [INFO] Epoch [800/1000], loss: 0.3635, best_loss: 0.0748
-2026-07-16 16:20:56,105 [INFO] Epoch [850/1000], loss: 0.1602, best_loss: 0.0748
-2026-07-16 16:20:57,660 [INFO] Epoch [900/1000], loss: 0.3735, best_loss: 0.0748
-2026-07-16 16:20:59,009 [INFO] Epoch [950/1000], loss: 0.1709, best_loss: 0.0736
-2026-07-16 16:21:00,236 [INFO] Epoch [1000/1000], loss: 0.1169, best_loss: 0.0706
-2026-07-16 16:21:00,237 [INFO] Training completed. Final loss: 0.1169
-2026-07-16 16:21:00,243 [INFO] Model saved to file data.pth
-2026-07-16 16:25:53,664 [INFO] Loading intents.json
-2026-07-16 16:25:53,668 [INFO] Dataset: 41 examples, 11 intents: ['goodbye', 'greeting', 'help', 'kaggle', 'learning_path', 'libraries', 'math_requirements', 'ml_vs_ds', 'python_or_r', 'thanks', 'what_is_ds']
-2026-07-16 16:25:53,668 [INFO] Vocabulary size (unique stems): 87
-2026-07-16 16:25:53,672 [INFO] Hyperparameters: epochs=1000, batch_size=8, lr=0.001, input_size=87, hidden_size=8, output_size=11
-2026-07-16 16:25:53,706 [INFO] Device for training: cuda
-2026-07-16 16:25:55,841 [INFO] Starting training
-2026-07-16 16:25:56,044 [INFO] Epoch [1/1000], loss: 2.4514, best_loss: 2.4514
-2026-07-16 16:25:57,141 [INFO] Epoch [50/1000], loss: 2.0864, best_loss: 2.0864
-2026-07-16 16:25:58,129 [INFO] Epoch [100/1000], loss: 1.5059, best_loss: 1.4891
-2026-07-16 16:25:59,118 [INFO] Epoch [150/1000], loss: 1.1889, best_loss: 1.0355
-2026-07-16 16:26:00,092 [INFO] Epoch [200/1000], loss: 0.8379, best_loss: 0.7769
-2026-07-16 16:26:01,055 [INFO] Epoch [250/1000], loss: 0.7725, best_loss: 0.5318
-2026-07-16 16:26:02,024 [INFO] Epoch [300/1000], loss: 0.5134, best_loss: 0.3856
-2026-07-16 16:26:02,974 [INFO] Epoch [350/1000], loss: 0.7612, best_loss: 0.3551
-2026-07-16 16:26:03,935 [INFO] Epoch [400/1000], loss: 0.4532, best_loss: 0.2835
-2026-07-16 16:26:04,885 [INFO] Epoch [450/1000], loss: 0.4668, best_loss: 0.2571
-2026-07-16 16:26:05,964 [INFO] Epoch [500/1000], loss: 0.3188, best_loss: 0.2571
-2026-07-16 16:26:07,127 [INFO] Epoch [550/1000], loss: 0.4659, best_loss: 0.1397
-2026-07-16 16:26:08,430 [INFO] Epoch [600/1000], loss: 0.3044, best_loss: 0.1397
-2026-07-16 16:26:10,273 [INFO] Epoch [650/1000], loss: 0.5701, best_loss: 0.1349
-2026-07-16 16:26:11,592 [INFO] Epoch [700/1000], loss: 0.2199, best_loss: 0.1290
-2026-07-16 16:26:12,829 [INFO] Epoch [750/1000], loss: 0.3022, best_loss: 0.1290
-2026-07-16 16:26:14,128 [INFO] Epoch [800/1000], loss: 0.1842, best_loss: 0.1100
-2026-07-16 16:26:15,674 [INFO] Epoch [850/1000], loss: 0.5012, best_loss: 0.1100
-2026-07-16 16:26:17,204 [INFO] Epoch [900/1000], loss: 0.1878, best_loss: 0.1071
-2026-07-16 16:26:18,778 [INFO] Epoch [950/1000], loss: 0.0863, best_loss: 0.0863
-2026-07-16 16:26:20,311 [INFO] Epoch [1000/1000], loss: 0.3031, best_loss: 0.0863
-2026-07-16 16:26:20,311 [INFO] Training completed. Final loss: 0.3031
-2026-07-16 16:26:20,319 [INFO] Model saved to file data.pth
+2026-07-18 15:15:34,401 [INFO] Loading intents.json
+2026-07-18 15:15:34,404 [INFO] Dataset: 46 examples, 11 intents: ['goodbye', 'greeting', 'help', 'kaggle', 'learning_path', 'libraries', 'math_requirements', 'ml_vs_ds', 'python_or_r', 'thanks', 'what_is_ds']
+2026-07-18 15:15:34,404 [INFO] Vocabulary size (unique stems): 90
+2026-07-18 15:15:34,409 [INFO] Hyperparameters: epochs=1000, batch_size=8, lr=0.001, input_size=90, hidden_size=8, output_size=11
+2026-07-18 15:15:34,443 [INFO] Device for training: cuda
+2026-07-18 15:15:37,449 [INFO] Starting training
+2026-07-18 15:15:37,651 [INFO] Epoch [1/1000], loss: 2.4189, best_loss: 2.4189
+2026-07-18 15:15:38,661 [INFO] Epoch [50/1000], loss: 1.9305, best_loss: 1.9305
+2026-07-18 15:15:39,606 [INFO] Epoch [100/1000], loss: 1.0715, best_loss: 1.0715
+2026-07-18 15:15:40,552 [INFO] Epoch [150/1000], loss: 0.9191, best_loss: 0.6767
+2026-07-18 15:15:41,476 [INFO] Epoch [200/1000], loss: 0.5366, best_loss: 0.5261
+2026-07-18 15:15:42,403 [INFO] Epoch [250/1000], loss: 0.5398, best_loss: 0.3365
+2026-07-18 15:15:43,373 [INFO] Epoch [300/1000], loss: 0.5574, best_loss: 0.3017
+2026-07-18 15:15:44,305 [INFO] Epoch [350/1000], loss: 0.4122, best_loss: 0.2281
+2026-07-18 15:15:45,226 [INFO] Epoch [400/1000], loss: 0.4291, best_loss: 0.2258
+2026-07-18 15:15:46,169 [INFO] Epoch [450/1000], loss: 0.2162, best_loss: 0.2031
+2026-07-18 15:15:47,102 [INFO] Epoch [500/1000], loss: 0.2589, best_loss: 0.1479
+2026-07-18 15:15:48,019 [INFO] Epoch [550/1000], loss: 0.2614, best_loss: 0.1056
+2026-07-18 15:15:48,960 [INFO] Epoch [600/1000], loss: 0.3522, best_loss: 0.1056
+2026-07-18 15:15:49,899 [INFO] Epoch [650/1000], loss: 0.1654, best_loss: 0.1056
+2026-07-18 15:15:50,827 [INFO] Epoch [700/1000], loss: 0.3711, best_loss: 0.0817
+2026-07-18 15:15:51,766 [INFO] Epoch [750/1000], loss: 0.2056, best_loss: 0.0817
+2026-07-18 15:15:52,770 [INFO] Epoch [800/1000], loss: 0.2405, best_loss: 0.0817
+2026-07-18 15:15:53,704 [INFO] Epoch [850/1000], loss: 0.1809, best_loss: 0.0817
+2026-07-18 15:15:54,635 [INFO] Epoch [900/1000], loss: 0.2008, best_loss: 0.0531
+2026-07-18 15:15:55,574 [INFO] Epoch [950/1000], loss: 0.4297, best_loss: 0.0531
+2026-07-18 15:15:56,530 [INFO] Epoch [1000/1000], loss: 0.2068, best_loss: 0.0531
+2026-07-18 15:15:56,530 [INFO] Training completed. Final loss: 0.2068
+2026-07-18 15:15:56,538 [INFO] Model saved to file data.pth

@@ -8,7 +8,10 @@
         "Hey",
         "Good day",
         "Is anyone there?",
-        "What's up"
+        "What's up",
+        "sup",
+        "Sup",
+        "yo"
       ],
       "responses": [
         "Hey there! I'm a Data Science helper bot. Ask me anything about the field, tools, or learning path.",
@@ -36,7 +39,9 @@
         "Thanks",
         "Thank you",
         "That was really helpful",
-        "Thanks a lot!"
+        "Thanks a lot!",
+        "Ty",
+        "ty"
       ],
       "responses": [
         "Happy to help!",
