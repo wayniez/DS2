@@ -86,7 +86,7 @@ On every user message, the bot:
   text);
 - writes a technical operation log (startup, errors) to `bot.log`.
 
-Example line from `qa_history.log`:
+Example line from `qa_history.db`:
 
 ```
 2026-07-16 12:03:41,221 | user_id=123456 username='someone' | Q: 'what is data science?' | tag=what_is_ds confidence=0.94 | A: 'Data Science sits at the intersection...'
