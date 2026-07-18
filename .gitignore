@@ -9,5 +9,5 @@ final_project/.env
 hw4/.env
 hw4/data.pth
 hw4/bot.log
-hw4/qa_history.log
+hw4/qa_history.db
 hw4/data.pth
