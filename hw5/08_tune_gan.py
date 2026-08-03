@@ -55,6 +55,7 @@ def make_objective(fraud_df, real_normal, val_df, features, categorical_in_topk,
     def objective(trial: optuna.Trial) -> float:
         # pac must be a divisor of batch_size (CTGAN constraint) -> we choose them together
         batch_size = trial.suggest_categorical("batch_size", [100, 200])
+
         pac = trial.suggest_categorical("pac", [1, 2, 5, 10])
         if batch_size % pac != 0:
             raise optuna.TrialPruned()
