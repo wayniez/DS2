@@ -4,10 +4,10 @@ data
 checkpoints
 __pycache__ 
 hw3/.env
-final_project/.env
 .idea
 hw4/.env
 hw4/data.pth
 hw4/bot.log
 hw4/qa_history.db
 hw4/data.pth
+final_project
