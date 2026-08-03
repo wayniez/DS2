@@ -7,10 +7,12 @@ and this was likely the cause of the low recall in the GAN-augmented
 model (see the discussion in the README)—the synthetic data was not “diverse” enough.
 
 """
+import gc
 import json
 import joblib
 import optuna
 import pandas as pd
+import torch
 import xgboost as xgb
 from ctgan import CTGAN
 from sklearn.metrics import average_precision_score
@@ -20,6 +22,7 @@ from config import (
     KNOWN_CATEGORICAL_COLS, N_OPTUNA_TRIALS_CTGAN, CTGAN_TUNING_EPOCHS,
     CTGAN_EPOCHS, OPTUNA_VAL_SIZE, CTGAN_BEST_PARAMS_PATH,
     TUNED_CTGAN_MODEL_PATH, TUNED_SYNTHETIC_FRAUD_PATH, RANDOM_STATE,
+    OPTUNA_STORAGE_URL,
 )
 
 optuna.logging.set_verbosity(optuna.logging.WARNING)
@@ -50,23 +53,22 @@ def tstr_pr_auc(real_normal, synthetic_fraud, val_df, features):
 
 def make_objective(fraud_df, real_normal, val_df, features, categorical_in_topk, n_fraud):
     def objective(trial: optuna.Trial) -> float:
-        # pac должен быть делителем batch_size (ограничение CTGAN) -> подбираем совместно
-        batch_size = trial.suggest_categorical("batch_size", [100, 200, 500])
+        # pac must be a divisor of batch_size (CTGAN constraint) -> we choose them together
+        batch_size = trial.suggest_categorical("batch_size", [100, 200])
         pac = trial.suggest_categorical("pac", [1, 2, 5, 10])
         if batch_size % pac != 0:
             raise optuna.TrialPruned()
 
-        gen_dim_choice = trial.suggest_categorical("generator_dim", ["small", "medium", "large"])
+        gen_dim_choice = trial.suggest_categorical("generator_dim", ["small", "medium"])
         dim_map = {
             "small": (128, 128),
             "medium": (256, 256),
-            "large": (256, 256, 256),
         }
         generator_dim = dim_map[gen_dim_choice]
-        disc_dim_choice = trial.suggest_categorical("discriminator_dim", ["small", "medium", "large"])
+        disc_dim_choice = trial.suggest_categorical("discriminator_dim", ["small", "medium"])
         discriminator_dim = dim_map[disc_dim_choice]
 
-        embedding_dim = trial.suggest_categorical("embedding_dim", [64, 128, 256])
+        embedding_dim = trial.suggest_categorical("embedding_dim", [64, 128])
         discriminator_steps = trial.suggest_int("discriminator_steps", 1, 5)
         generator_lr = trial.suggest_float("generator_lr", 1e-5, 1e-3, log=True)
         discriminator_lr = trial.suggest_float("discriminator_lr", 1e-5, 1e-3, log=True)
@@ -82,7 +84,7 @@ def make_objective(fraud_df, real_normal, val_df, features, categorical_in_topk,
             generator_lr=generator_lr,
             discriminator_lr=discriminator_lr,
             verbose=False,
-            cuda=True,
+            enable_gpu=True,
         )
         ctgan.fit(fraud_df, discrete_columns=categorical_in_topk)
 
@@ -90,6 +92,12 @@ def make_objective(fraud_df, real_normal, val_df, features, categorical_in_topk,
         synthetic_fraud[TARGET_COL] = 1
 
         score = tstr_pr_auc(real_normal, synthetic_fraud, val_df, features)
+
+        del ctgan, synthetic_fraud
+        gc.collect()
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+
         return score
 
     return objective
@@ -110,12 +118,26 @@ def main():
 
     categorical_in_topk = [c for c in features if c in KNOWN_CATEGORICAL_COLS]
 
-    study = optuna.create_study(direction="maximize", study_name="ctgan_tstr_pr_auc")
+    study = optuna.create_study(
+        direction="maximize",
+        study_name="ctgan_tstr_pr_auc_light",  # separate name: simplified search space,
+                                                # not mixing with previous (including those calculated with a bug) trials
+        storage=OPTUNA_STORAGE_URL,
+        load_if_exists=True,
+    )
     objective = make_objective(fraud_df, real_normal, val_sub, features, categorical_in_topk, n_fraud)
 
-    print(f"[optuna-ctgan] Running {N_OPTUNA_TRIALS_CTGAN} trials "
-          f"(each = training CTGAN on {CTGAN_TUNING_EPOCHS} epochs) ...")
-    study.optimize(objective, n_trials=N_OPTUNA_TRIALS_CTGAN, show_progress_bar=True)
+    n_done = len(study.trials)
+    n_remaining = max(N_OPTUNA_TRIALS_CTGAN - n_done, 0)
+    if n_done > 0:
+        print(f"[optuna-ctgan] Found existing study: {n_done} trial(s) already completed, "
+              f"continuing (remaining {n_remaining}) ...")
+    if n_remaining == 0:
+        print(f"[optuna-ctgan] Already completed {n_done} >= {N_OPTUNA_TRIALS_CTGAN} trials, tuning not needed.")
+    else:
+        print(f"[optuna-ctgan] Running {n_remaining} trials "
+              f"(each = training CTGAN on {CTGAN_TUNING_EPOCHS} epochs) ...")
+        study.optimize(objective, n_trials=n_remaining, show_progress_bar=True)
 
     print(f"\n[optuna-ctgan] Best TSTR PR-AUC: {study.best_value:.4f}")
     print("[optuna-ctgan] Best parameters:")
@@ -128,7 +150,7 @@ def main():
 
     # ---- Retrain the final CTGAN on the FULL training set with the best parameters
     #      and the full number of epochs (CTGAN_EPOCHS, not shortened) ----
-    dim_map = {"small": (128, 128), "medium": (256, 256), "large": (256, 256, 256)}
+    dim_map = {"small": (128, 128), "medium": (256, 256)}
     bp = study.best_params
 
     full_fraud_df = train_df.loc[train_df[TARGET_COL] == 1, features].reset_index(drop=True)
@@ -145,7 +167,7 @@ def main():
         generator_lr=bp["generator_lr"],
         discriminator_lr=bp["discriminator_lr"],
         verbose=True,
-        cuda=True,
+        enable_gpu=True,
     )
     print("\n[optuna-ctgan] Training the final CTGAN on the full training set with the best parameters ...")
     final_ctgan.fit(full_fraud_df, discrete_columns=categorical_in_topk)

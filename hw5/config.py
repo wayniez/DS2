@@ -27,7 +27,7 @@ BASELINE_MODEL_PATH = MODELS_DIR / "baseline_xgb.joblib"
 FULL_MODEL_PATH = MODELS_DIR / "full_features_xgb.joblib"
 CTGAN_MODEL_PATH = MODELS_DIR / "ctgan_fraud.pkl"
 
-# Results of Optuna tuning
+# Results of Optuna-tuning
 XGB_BEST_PARAMS_PATH = MODELS_DIR / "xgb_best_params.json"
 CTGAN_BEST_PARAMS_PATH = MODELS_DIR / "ctgan_best_params.json"
 TUNED_CTGAN_MODEL_PATH = MODELS_DIR / "ctgan_fraud_tuned.pkl"
@@ -40,11 +40,11 @@ TARGET_COL = "isFraud"
 ID_COL = "TransactionID"
 TIME_COL = "TransactionDT"
 
-# Missing value threshold: columns with a fraction of NaN values above this value will be dropped
+# Missing value threshold: columns with a fraction of NaN values above this threshold will be dropped
 MISSING_THRESHOLD = 0.70
 
 # Categorical columns in IEEE-CIS (base list; some V-columns and id_*
-# are also categorical, but these are numeric-like encoded features)
+# are also categorical, but they are numeric-like encoded features)
 KNOWN_CATEGORICAL_COLS = [
     "ProductCD",
     "card1", "card2", "card3", "card4", "card5", "card6",
@@ -52,12 +52,21 @@ KNOWN_CATEGORICAL_COLS = [
     "P_emaildomain", "R_emaildomain",
     "M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8", "M9",
     "DeviceType", "DeviceInfo",
-] + [f"id_{i}" for i in range(12, 39)]  # id_12..id_38 в IEEE-CIS categorical
+] + [f"id_{i}" for i in range(12, 39)]  # id_12..id_38 in IEEE-CIS are categorical
 
-# ---------- Splits ----------
+# ---------- Business cost (for cost-based threshold) ----------
+# Conditional cost of one manual review/blocking of a normal transaction
+# (False Positive). In a real project, this number needs to be justified —
+# for example, the cost of an analyst's work on one verification, or an estimate
+# of losses from customer attrition due to unnecessary card blocks. Here this
+# is a demonstration value — easy to change and discuss the sensitivity
+# of the result to this parameter (see 06_compare_strategies.py).
+REVIEW_COST = 10.0
+
+# ---------- Random state ----------
 RANDOM_STATE = 42
 TEST_SIZE = 0.2
-VAL_SIZE = 0.1  # от train
+VAL_SIZE = 0.1  # from train
 
 # ---------- Baseline model ----------
 TOP_K = 30  # How many features do we include in the "reduced" space for a GAN?
@@ -75,14 +84,20 @@ XGB_PARAMS = dict(
 
 # ---------- Optuna ----------
 N_OPTUNA_TRIALS_XGB = 50
-N_OPTUNA_TRIALS_CTGAN = 5  # CTGAN training runs are expensive (each one = a full GAN training run), so fewer
-CTGAN_TUNING_EPOCHS = 100  # shortened training during tuning (for speed); final value -> CTGAN_EPOCHS
-OPTUNA_VAL_SIZE = 0.15  # proportion of the training data set aside for validation during tuning (time-based)
+N_OPTUNA_TRIALS_CTGAN = 20  # CTGAN trials are computationally expensive (each one = a full GAN training run), so use fewer
+CTGAN_TUNING_EPOCHS = 100  # Shorter training during tuning (for speed); final value → CTGAN_EPOCHS
+OPTUNA_VAL_SIZE = 0.15  # proportion of the training set set aside for validation during tuning (time-based)
+
+# SQLite storage for Optuna: makes the study persistent—if the process
+# is interrupted (Ctrl+C, connection loss, restart), when Optuna is restarted,
+# it will resume from the trials that have already been completed, rather than starting from scratch.
+OPTUNA_STORAGE_PATH = MODELS_DIR / "optuna_studies.db"
+OPTUNA_STORAGE_URL = f"sqlite:///{OPTUNA_STORAGE_PATH}"
 
 # ---------- CTGAN ----------
 CTGAN_EPOCHS = 300
 CTGAN_BATCH_SIZE = 500
 # How many synthetic fraud examples to generate.
-# By default — match the number of normal transactions
-# in train (full balancing). Can be set to any number manually.
+# By default, the number of synthetic fraud examples is set equal to the number of normal transactions
+# in the training set (full balancing). You can set any number manually.
 N_SYNTHETIC_SAMPLES = None  # None -> calculated automatically in 04_ctgan_synthesis.py

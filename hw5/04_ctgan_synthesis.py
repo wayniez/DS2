@@ -42,7 +42,7 @@ def main():
         epochs=CTGAN_EPOCHS,
         batch_size=CTGAN_BATCH_SIZE,
         verbose=True,
-        cuda=True,  # CTGAN automatically falls back to the CPU if CUDA is unavailable
+        enable_gpu=True,  # CTGAN automatically falls back to the CPU if CUDA is unavailable
     )
 
     ctgan.fit(fraud_df, discrete_columns=categorical_in_topk)
