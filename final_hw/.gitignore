@@ -1,0 +1,23 @@
+# Environment
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
+.venv/
+venv/
+
+# Data / uploads
+data/uploads/
+evaluation/results.json
+
+# OS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/

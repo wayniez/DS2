@@ -1,0 +1,160 @@
+[
+  {
+    "id": "q01",
+    "question": "How many rows and columns does this dataset have?",
+    "expected_facts": ["603 rows", "12 columns"],
+    "expected_tools_any_of": ["inspect_dataset", "profile_dataset"],
+    "category": "profiling"
+  },
+  {
+    "id": "q02",
+    "question": "Are there any duplicate rows in this dataset?",
+    "expected_facts": ["3 duplicate rows"],
+    "expected_tools_any_of": ["inspect_dataset", "profile_dataset"],
+    "category": "profiling"
+  },
+  {
+    "id": "q03",
+    "question": "Which columns have missing values?",
+    "expected_facts": ["total_charges"],
+    "expected_tools_any_of": ["inspect_dataset", "profile_dataset"],
+    "category": "profiling"
+  },
+  {
+    "id": "q04",
+    "question": "What is the overall churn rate in this dataset?",
+    "expected_facts": ["about 30%", "29.9%"],
+    "expected_tools_any_of": ["calculate_statistics", "run_sql"],
+    "category": "statistics"
+  },
+  {
+    "id": "q05",
+    "question": "Which contract type has the highest churn rate?",
+    "expected_facts": ["month-to-month has the highest churn rate", "45%"],
+    "expected_tools_any_of": ["calculate_statistics", "run_sql"],
+    "category": "group_statistics"
+  },
+  {
+    "id": "q06",
+    "question": "Which contract type has the lowest churn rate?",
+    "expected_facts": ["two year has the lowest churn rate", "9-10%"],
+    "expected_tools_any_of": ["calculate_statistics", "run_sql"],
+    "category": "group_statistics"
+  },
+  {
+    "id": "q07",
+    "question": "Do customers with fiber optic internet churn more than DSL customers?",
+    "expected_facts": ["fiber optic churns more than DSL", "33-34%", "24-25%"],
+    "expected_tools_any_of": ["calculate_statistics", "run_sql"],
+    "category": "group_statistics"
+  },
+  {
+    "id": "q08",
+    "question": "Which payment method has the highest churn rate?",
+    "expected_facts": ["electronic check has the highest churn rate", "35-36%"],
+    "expected_tools_any_of": ["calculate_statistics", "run_sql"],
+    "category": "group_statistics"
+  },
+  {
+    "id": "q09",
+    "question": "Do churned customers have shorter or longer average tenure than retained customers?",
+    "expected_facts": ["churned customers have shorter average tenure", "28", "39"],
+    "expected_tools_any_of": ["calculate_statistics", "run_sql"],
+    "category": "group_statistics"
+  },
+  {
+    "id": "q10",
+    "question": "Do churned customers pay more or less on average per month than retained customers?",
+    "expected_facts": ["churned customers pay more on average", "73", "69"],
+    "expected_tools_any_of": ["calculate_statistics", "run_sql"],
+    "category": "group_statistics"
+  },
+  {
+    "id": "q11",
+    "question": "Is there a strong correlation between tenure and monthly charges?",
+    "expected_facts": ["little to no correlation", "close to 0"],
+    "expected_tools_any_of": ["calculate_statistics"],
+    "category": "correlation"
+  },
+  {
+    "id": "q12",
+    "question": "Build a baseline model to predict churn and tell me how well it performs.",
+    "expected_facts": ["roc-auc", "accuracy"],
+    "expected_tools_any_of": ["train_baseline_model"],
+    "category": "ml"
+  },
+  {
+    "id": "q13",
+    "question": "What are the most important features for predicting churn?",
+    "expected_facts": ["contract", "tenure"],
+    "expected_tools_any_of": ["train_baseline_model", "calculate_feature_importance", "calculate_shap"],
+    "category": "ml"
+  },
+  {
+    "id": "q14",
+    "question": "Find the main factors behind customer churn and explain their effect.",
+    "expected_facts": ["contract", "tenure", "roc-auc"],
+    "expected_tools_any_of": ["train_baseline_model", "calculate_shap", "calculate_feature_importance"],
+    "category": "ml_multi_step"
+  },
+  {
+    "id": "q15",
+    "question": "Can you build a regression model to predict monthly charges?",
+    "expected_facts": ["r2", "regression"],
+    "expected_tools_any_of": ["train_baseline_model"],
+    "category": "ml"
+  },
+  {
+    "id": "q16",
+    "question": "Are there any unusual or anomalous customers in this dataset?",
+    "expected_facts": ["anomal"],
+    "expected_tools_any_of": ["detect_anomalies"],
+    "category": "anomaly_detection"
+  },
+  {
+    "id": "q17",
+    "question": "Create a chart comparing churn rate across contract types.",
+    "expected_facts": ["chart", "contract"],
+    "expected_tools_any_of": ["create_visualization"],
+    "category": "visualization"
+  },
+  {
+    "id": "q18",
+    "question": "Show me the distribution of monthly charges.",
+    "expected_facts": ["distribution", "monthly_charges"],
+    "expected_tools_any_of": ["create_visualization"],
+    "category": "visualization"
+  },
+  {
+    "id": "q19",
+    "question": "Why did churn increase over the last few years?",
+    "expected_facts": ["cannot determine", "no usable time trend", "does not support"],
+    "expected_tools_any_of": [],
+    "category": "grounding_negative_case",
+    "notes": "The dataset has a signup_date per customer but no repeated-over-time churn measurements, so the agent should decline to claim a time trend rather than inventing one."
+  },
+  {
+    "id": "q20",
+    "question": "What was our churn rate last quarter compared to this quarter?",
+    "expected_facts": ["cannot determine", "does not contain", "no quarter"],
+    "expected_tools_any_of": [],
+    "category": "grounding_negative_case",
+    "notes": "There is no period/quarter column, so the agent must not fabricate a quarter-over-quarter comparison."
+  },
+  {
+    "id": "q21",
+    "question": "Which 5 customers are most likely to churn next month based on a forecast?",
+    "expected_facts": ["cannot", "no forecast", "not a time series"],
+    "expected_tools_any_of": [],
+    "category": "grounding_negative_case",
+    "notes": "This is a cross-sectional dataset with no temporal ordering/forecasting target, so the agent should not invent a forecast."
+  },
+  {
+    "id": "q22",
+    "question": "Give me a full analytical report on the main drivers of churn, with supporting charts.",
+    "expected_facts": ["contract", "tenure", "roc-auc"],
+    "expected_tools_any_of": ["inspect_dataset", "calculate_statistics", "train_baseline_model", "calculate_shap", "create_visualization"],
+    "category": "full_report",
+    "notes": "This should exercise most of the tool suite in one multi-step run; used to check tool_calls_made and overall latency."
+  }
+]

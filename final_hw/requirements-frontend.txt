@@ -1,0 +1,13 @@
+# Minimal dependency set for the Streamlit frontend container.
+#
+# Deliberately does NOT include the backend's ML/LLM stack (xgboost,
+# shap, duckdb, anthropic, google-genai, openai) -- the frontend only
+# talks to the backend over HTTP and renders Plotly charts, so pulling
+# in those heavier native-code dependencies here is unnecessary and, in
+# at least one observed case, caused a segfault at import time inside
+# the frontend container due to a missing system OpenMP runtime that
+# only the backend image installs (see Dockerfile vs Dockerfile.frontend).
+
+streamlit==1.41.1
+plotly==5.24.1
+requests==2.32.3

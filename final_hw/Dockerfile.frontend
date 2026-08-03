@@ -1,0 +1,22 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY requirements-frontend.txt .
+RUN pip install --no-cache-dir -r requirements-frontend.txt
+
+COPY frontend/ ./frontend/
+
+ENV PYTHONUNBUFFERED=1
+# Defensive workaround for a known class of native-library segfaults
+# (pyarrow/OpenBLAS thread-pool sizing misdetecting available CPUs under
+# cgroup-constrained environments, e.g. Docker Desktop on Windows/WSL2) --
+# observed in testing via Streamlit's dataframe rendering path. Capping
+# these to 1 avoids the crash at a small performance cost that doesn't
+# matter for this app's scale.
+ENV OMP_NUM_THREADS=1
+ENV OPENBLAS_NUM_THREADS=1
+
+EXPOSE 8501
+
+CMD ["streamlit", "run", "frontend/streamlit_app.py", "--server.address=0.0.0.0", "--server.port=8501"]
