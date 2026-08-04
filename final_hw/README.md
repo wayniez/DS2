@@ -256,49 +256,17 @@ tools are exercised against real computation.
 - **Single-process, in-memory sessions** - uploaded datasets and
   session state live in process memory; restarting the backend clears
   all sessions, and this won't scale across multiple worker processes
-  as-is (see Future Improvements).
+  as-is.
 - **One dataset per session** - no cross-dataset joins or multi-file analysis yet.
 - **CSV only** - no Excel/Parquet/database sources yet.
 - **Baseline models only** - no hyperparameter tuning, cross-validation,
   or AutoML; this is intentional for a portfolio-scope baseline, not a
   production modeling pipeline.
-- **Heuristic hallucination detection** - the evaluation harness's
-  `ungrounded_number_count` is a simple numeric-substring heuristic, not
-  a rigorous hallucination classifier.
 - **No persistent history** - conversation history for a session isn't
   persisted to disk/DB; it lives in the Streamlit session and the
   agent's in-memory run state.
-- **Correlation heatmap orientation (fixed)** - in live testing with a
-  new dataset (`electricity_cost_dataset.csv`), the correlation heatmap
-  rendered with its self-correlation cells (value = 1) running top-right
-  to bottom-left instead of the conventional top-left-to-bottom-right
-  diagonal. The correlation *values* were all correct; only the layout
-  was confusing. Cause: Plotly's `Heatmap` trace defaults its y-axis to
-  run bottom-to-top, so passing the same label order to both `x` and `y`
-  visually flips the matrix vertically relative to the standard reading
-  order. Fixed with `fig.update_yaxes(autorange="reversed")` in
-  `app/tools/visualization.py`.
-- **Grounded numbers don't guarantee a correct interpretation** - in
-  live testing (Groq), one run of "compare churn across contract
-  types" returned the *correct* computed numbers (45.23% for
-  month-to-month, 9.57% for two-year -- both matching the tool's real
-  output and the chart rendered alongside it) but described them
-  backwards in the text: *"month-to-month contracts having the **lowest**
-  churn rate... two-year contracts having the **highest** churn rate"*.
-  Unlike every other issue in this section, this was not a bug in the
-  app's code -- the tool result and chart were both correct, and every
-  number in the answer was genuinely grounded. It was a reasoning/wording
-  error by the model itself when translating correct numbers into a
-  comparative claim ("higher percent = lower churn" instead of "higher
-  percent = higher churn"). This is exactly the gap the evaluation
-  harness's `fact_match_rate` is meant to catch (see `evaluation/README.md`)
-  -- numeric grounding alone doesn't guarantee correct interpretation, and
-  weaker/open-weight models appear more prone to this kind of mix-up on
-  superlative comparisons than Claude/GPT-class models. Worth keeping an
-  eye on with real usage; a stronger system-prompt instruction to
-  double-check comparative claims against the raw numbers before
-  answering is a reasonable next step if this recurs often with a given
-  model.
+
+
 
 ## Future Improvements
 
