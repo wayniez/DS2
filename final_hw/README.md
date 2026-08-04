@@ -14,6 +14,13 @@ architectural principle:
 > every numeric claim in the final answer must trace back to a tool
 > result from that conversation.
 
+**Live demo:** deployed on Azure Container Apps -
+[ai-data-analyst-frontend...azurecontainerapps.io](https://ai-data-analyst-frontend.thankfulpebble-a071e293.polandcentral.azurecontainerapps.io/).
+Runs with `min-replicas 0` to control costs on a subscription, so
+the first request after a period of inactivity may take a little longer
+while the container cold-starts. See [Deploying to Azure](#deploying-to-azure)
+below for the full setup.
+
 ## Overview
 
 You upload a dataset, e.g. `telco_churn.csv`, and ask:
@@ -54,19 +61,18 @@ generating charts - and returns an answer like:
 - **Provider-agnostic LLM layer** - swap in a different LLM provider by
   implementing one interface; nothing else in the app changes.
 
-
 ## Tech Stack
 
 | Layer | Technology |
 |---|---|
 | Backend | Python 3.11+, FastAPI, Pydantic, Uvicorn |
-| LLM | Anthropic Messages API (via a provider-agnostic interface) |
+| LLM | Anthropic, Google Gemini, and any OpenAI-compatible endpoint (Groq, OpenRouter, Ollama), behind one provider-agnostic interface |
 | Data | Pandas, NumPy, DuckDB |
 | ML | scikit-learn, XGBoost (optional), SHAP |
 | Visualization | Plotly |
 | Frontend | Streamlit |
 | Testing | pytest |
-| Infra | Docker, docker-compose |
+| Infra | Docker, docker-compose, Azure Container Registry, Azure Container Apps |
 
 ## How It Works
 
@@ -85,33 +91,6 @@ generating charts - and returns an answer like:
 4. **Final answer** - a `FinalReport` with the answer text, any
    generated charts, and a safe execution trace is returned and
    rendered by the Streamlit UI.
-
-## Agent Workflow
-
-For a question like *"Find the main factors behind churn"*, a typical
-(not hardcoded) sequence looks like:
-
-```
-inspect_dataset()
-      │
-      ▼
-calculate_statistics(group_statistics: contract → churn)
-      │
-      ▼
-create_visualization(category_comparison)
-      │
-      ▼
-train_baseline_model(target_column="churn")
-      │
-      ▼
-calculate_shap()
-      │
-      ▼
-final grounded answer
-```
-
-The LLM decides this sequence itself; a simpler question ("how many
-rows does this have?") might only call `inspect_dataset` once.
 
 ## Available Tools
 
@@ -139,8 +118,7 @@ rows does this have?") might only call `inspect_dataset` once.
 
 ## Screenshots
 
-*(placeholder - add screenshots of the Streamlit chat, dataset overview,
-and agent trace tabs here once running locally)*
+![alt text](image.png)
 
 ## Evaluation
 
@@ -196,8 +174,10 @@ ai-data-analyst/
 │   ├── evaluate.py
 │   └── README.md
 ├── data/sample/telco_churn.csv   # synthetic sample dataset with real signal
+├── docs/
+│   └── azure-deployment.md       # full Azure Container Apps deployment runbook
 ├── Dockerfile / Dockerfile.frontend / docker-compose.yml
-├── requirements.txt
+├── requirements.txt / requirements-frontend.txt
 ├── .env.example
 └── README.md
 ```
@@ -207,31 +187,9 @@ ai-data-analyst/
 ```bash
 git clone <this-repo>
 cd ai-data-analyst
-python -m venv .venv && source .venv/bin/activate
+python -m venv .venv && .venv/Scripts/activate
 pip install -r requirements.txt
 ```
-
-## Environment Variables
-
-Copy `.env.example` to `.env` and fill in your key:
-
-```bash
-cp .env.example .env
-```
-
-| Variable | Description | Default |
-|---|---|---|
-| `LLM_PROVIDER` | Currently `anthropic` | `anthropic` |
-| `LLM_API_KEY` | Your Anthropic API key | *(required)* |
-| `LLM_MODEL` | Model name | `claude-sonnet-4-6` |
-| `LLM_MAX_TOKENS` | Max tokens per completion | `2048` |
-| `MAX_AGENT_STEPS` | Safety cap on tool-calling steps per question | `10` |
-| `DATA_STORAGE_DIR` | Where uploads are stored | `./data/uploads` |
-| `MAX_UPLOAD_SIZE_MB` | Max upload size | `50` |
-| `MAX_DATASET_ROWS` | Max accepted rows per dataset | `200000` |
-| `BACKEND_URL` | Used by the Streamlit frontend | `http://localhost:8000` |
-
-Never commit a real `.env` file - it's already in `.gitignore`.
 
 ## Running Locally
 
@@ -258,6 +216,29 @@ docker compose up --build
 
 - Backend: http://localhost:8000 (docs at `/docs`)
 - Frontend: http://localhost:8501
+
+## Deploying to Azure
+
+The app is deployed as two separate **Azure Container Apps** inside one
+shared environment - the closest cloud equivalent to the local
+`docker-compose.yml` setup:
+
+- **`ai-data-analyst-backend`** - `ingress: internal`, not reachable
+  from the public internet at all.
+- **`ai-data-analyst-frontend`** - `ingress: external`, publicly
+  reachable, talks to the backend over its internal FQDN via
+  `BACKEND_URL`.
+
+Full step-by-step instructions - resource group, Azure Container
+Registry, building/pushing both images, creating both Container Apps,
+checking logs, redeploying after a code change, and tearing everything
+down - are in **[`docs/azure-deployment.md`](docs/azure-deployment.md)**.
+
+A few real things found while deploying, worth knowing before you try it:
+
+- **Resource names can't use underscores** - Container Apps environments
+  and Container Apps themselves require hyphens, not underscores, in
+  their names (resource groups are more lenient).
 
 ## Testing
 
@@ -287,15 +268,43 @@ tools are exercised against real computation.
 - **No persistent history** - conversation history for a session isn't
   persisted to disk/DB; it lives in the Streamlit session and the
   agent's in-memory run state.
+- **Correlation heatmap orientation (fixed)** - in live testing with a
+  new dataset (`electricity_cost_dataset.csv`), the correlation heatmap
+  rendered with its self-correlation cells (value = 1) running top-right
+  to bottom-left instead of the conventional top-left-to-bottom-right
+  diagonal. The correlation *values* were all correct; only the layout
+  was confusing. Cause: Plotly's `Heatmap` trace defaults its y-axis to
+  run bottom-to-top, so passing the same label order to both `x` and `y`
+  visually flips the matrix vertically relative to the standard reading
+  order. Fixed with `fig.update_yaxes(autorange="reversed")` in
+  `app/tools/visualization.py`.
+- **Grounded numbers don't guarantee a correct interpretation** - in
+  live testing (Groq), one run of "compare churn across contract
+  types" returned the *correct* computed numbers (45.23% for
+  month-to-month, 9.57% for two-year -- both matching the tool's real
+  output and the chart rendered alongside it) but described them
+  backwards in the text: *"month-to-month contracts having the **lowest**
+  churn rate... two-year contracts having the **highest** churn rate"*.
+  Unlike every other issue in this section, this was not a bug in the
+  app's code -- the tool result and chart were both correct, and every
+  number in the answer was genuinely grounded. It was a reasoning/wording
+  error by the model itself when translating correct numbers into a
+  comparative claim ("higher percent = lower churn" instead of "higher
+  percent = higher churn"). This is exactly the gap the evaluation
+  harness's `fact_match_rate` is meant to catch (see `evaluation/README.md`)
+  -- numeric grounding alone doesn't guarantee correct interpretation, and
+  weaker/open-weight models appear more prone to this kind of mix-up on
+  superlative comparisons than Claude/GPT-class models. Worth keeping an
+  eye on with real usage; a stronger system-prompt instruction to
+  double-check comparative claims against the raw numbers before
+  answering is a reasonable next step if this recurs often with a given
+  model.
 
 ## Future Improvements
 
 - Support Excel, Parquet, and multiple simultaneous datasets.
-- Persistent sessions (Redis/Postgres) instead of in-memory.
-- Natural-language-to-SQL as an explicit, separate tool.
 - PDF report export of the final analysis.
 - Model comparison / experiment tracking across repeated runs.
-- Local LLM support, and a second hosted provider, via the existing `LLMProvider` interface.
 - Forecasting / time-series tools for datasets that do have a genuine time axis.
 - LLM-as-judge scoring in the evaluation harness, alongside the current substring/heuristic checks.
 - Optionally migrate the agent loop to LangGraph for more complex branching workflows, once the plain-loop version's behavior is well understood and tested.
