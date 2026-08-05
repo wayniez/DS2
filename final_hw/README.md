@@ -118,7 +118,7 @@ generating charts - and returns an answer like:
 
 ## Screenshots
 
-![alt text](image.png)
+<img width="1568" height="707" alt="preview" src="https://github.com/user-attachments/assets/b81edf4a-0786-44c4-9352-4cdc94e590ad" />
 
 ## Evaluation
 
